@@ -1,9 +1,10 @@
 import Header from "@/components/Header";
-import {getSession} from "next-auth/react";
-import Login from "@/components/Login";
+import {getSession, signIn} from "next-auth/react";
 
 export default function Home({session}) {
-    if (!session) return <Login/>
+    if (!session) {
+        signIn()
+    }
     return (
         <div>
             <Header/>

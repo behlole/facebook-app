@@ -6,7 +6,8 @@ const nextConfig = {
         domains: [
             'links.papareact.com',
             'platform-lookaside.fbsbx.com',
-            'firebasestorage.googleapis.com'
+            'firebasestorage.googleapis.com',
+            'avatars.githubusercontent.com'
         ],
     },
     webpack: (config) => {

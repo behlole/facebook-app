@@ -6,11 +6,12 @@ export const authOptions = {
     providers: [
         GithubProvider({
             clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_CLIENT,
+            clientSecret: process.env.GITHUB_SECRET,
         }),
         Facebook({
             clientId: process.env.FACEBOOK_ID,
-            clientSecret: process.env.FACEBOOK_SECRET
+            clientSecret: process.env.FACEBOOK_SECRET,
+
         })
 
     ],

@@ -2,12 +2,31 @@ import {useSession} from "next-auth/react";
 import Image from "next/image";
 import {EmojiHappyIcon} from "@heroicons/react/outline";
 import {CameraIcon, VideoCameraIcon} from "@heroicons/react/solid";
+import {useRef} from "react";
+import firebase from "firebase/app";
+import {collection, addDoc, serverTimestamp} from "firebase/firestore";
+import {db} from "@/firebase";
 
 function InputBox() {
     const {data} = useSession();
+    const inputRef = useRef(null);
+    const filePickerRef = useRef(null);
 
-    const sendPost = (event) => {
+    const sendPost = async (event) => {
         event.preventDefault();
+        if (!inputRef.current.value) return;
+        addDoc(collection(db, 'posts'), {
+            message: inputRef.current.value,
+            name: data.user.name,
+            email: data.user.email,
+            image: data.user.image,
+            timestamp: serverTimestamp()
+        });
+        inputRef.current.value = ""
+    }
+
+    const addImageToPost = (event) => {
+
     }
 
     return (
@@ -22,6 +41,7 @@ function InputBox() {
                     alt={"User Image"}/>
                 <form className={"flex flex-1"}>
                     <input
+                        ref={inputRef}
                         className={"rounded-full h-12 bg-gray-100 flex-grow px-5 focus:outline-none"}
                         type={"text"}
                         placeholder={`What's on your mind, ${data.user.name}`}
@@ -45,6 +65,11 @@ function InputBox() {
                     <CameraIcon
                         className={"h-7 text-green-400"}
                     />
+                    <input
+                        ref={filePickerRef}
+                        hidden
+                        type={"file"}
+                        onClick={addImageToPost}/>
                     <p className={"text-xs sm:text-sm xl:text-base"}>Photo/Video</p>
                 </div>
                 <div className={"inputIcon"}>

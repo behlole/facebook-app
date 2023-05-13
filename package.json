@@ -15,6 +15,7 @@
     "dotenv-webpack": "^8.0.1",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
+    "firebase": "^9.22.0",
     "fs": "^0.0.1-security",
     "next": "13.4.2",
     "next-auth": "^4.22.1",

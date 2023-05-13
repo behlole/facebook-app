@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const Dotenv = require('dotenv-webpack');
+
 const nextConfig = {
     images: {
         domains: [
@@ -6,6 +8,10 @@ const nextConfig = {
             'platform-lookaside.fbsbx.com',
             'firebasestorage.googleapis.com'
         ],
+    },
+    webpack: (config) => {
+        config.plugins.push(new Dotenv());
+        return config;
     },
 }
 

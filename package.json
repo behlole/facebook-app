@@ -11,8 +11,11 @@
   "dependencies": {
     "@heroicons/react": "^1.0.6",
     "autoprefixer": "10.4.14",
+    "dotenv": "^16.0.3",
+    "dotenv-webpack": "^8.0.1",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
+    "fs": "^0.0.1-security",
     "next": "13.4.2",
     "next-auth": "^4.22.1",
     "postcss": "8.4.23",

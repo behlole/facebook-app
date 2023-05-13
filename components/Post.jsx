@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import {ShareIcon, ThumbUpIcon} from "@heroicons/react/outline";
+import {ChatIcon} from "@heroicons/react/solid";
 
 export function Post({
                          name,
@@ -39,11 +41,17 @@ export function Post({
             )}
             <div
                 className={"flex justify-between items-center rounded-b-2xl bg-white shadow-md text-gray-400 border-t"}>
-                <div>
-
+                <div className={"inputIcon rounded-b-2xl"}>
+                    <ThumbUpIcon className={"h-4"}/>
+                    <p className={"hidden md:flex text-xs sm:text-base"}>Like</p>
                 </div>
-                <div>
-
+                <div className={"inputIcon rounded-none"}>
+                    <ChatIcon className={"h-4"}/>
+                    <p className={"hidden md:flex text-xs sm:text-base"}>Comment</p>
+                </div>
+                <div className={"inputIcon rounded-none"}>
+                    <ShareIcon className={"h-4"}/>
+                    <p className={"hidden md:flex text-xs sm:text-base"}>Share</p>
                 </div>
             </div>
         </div>

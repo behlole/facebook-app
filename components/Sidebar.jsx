@@ -5,9 +5,12 @@ import SidebarRow from "@/components/SidebarRow";
 
 function Sidebar() {
     const {data, loading} = useSession();
+    if (!data) {
+        signIn()
+    }
     return (
         <div className={"p-2 mt-5 max-w-[600px] xl:min-w-[300px]"}>
-            <SidebarRow src={data.user.image} title={data.user.name}/>
+            <SidebarRow src={data?.user.image} title={data?.user.name}/>
             <SidebarRow Icon={UsersIcon} title={"Friends"}/>
             <SidebarRow Icon={UserGroupIcon} title={"Groups"}/>
             <SidebarRow Icon={ShoppingBagIcon} title={"Marketplace"}/>

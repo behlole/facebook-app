@@ -20,9 +20,9 @@ function InputBox() {
         try {
             const docRef = await addDoc(collection(db, 'posts'), {
                 message: inputRef.current.value,
-                name: data.user.name,
-                email: data.user.email,
-                image: data.user.image,
+                name: data?.user.name,
+                email: data?.user.email,
+                image: data?.user?.image,
                 timestamp: serverTimestamp()
             });
 
@@ -58,10 +58,10 @@ function InputBox() {
     }
     return (
         <div className={"bg-white p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6"}>
-            <div className={"flex space-x-4 p-4 items-center"}>
+            <div className={"flex flex-col md:flex-row space-x-4 p-4 items-center"}>
                 <Image
                     className={"rounded-full"}
-                    src={data.user.image}
+                    src={data?.user?.image}
                     width={40}
                     height={40}
                     layout={"fixed"}
@@ -71,7 +71,7 @@ function InputBox() {
                         ref={inputRef}
                         className={"rounded-full h-12 bg-gray-100 flex-grow px-5 focus:outline-none"}
                         type={"text"}
-                        placeholder={`What's on your mind, ${data.user.name}`}
+                        placeholder={`What's on your mind, ${data?.user.name}`}
                     />
                     <button
                         hidden
@@ -97,7 +97,7 @@ function InputBox() {
                     <VideoCameraIcon
                         className={"h-7 text-red-500"}
                     />
-                    <p className={"text-xs sm:text-sm xl:text-base"}>Live Video</p>
+                    <p className={"hidden md:flex text-xs sm:text-sm xl:text-base"}>Live Video</p>
                 </div>
                 <div onClick={() => filePickerRef.current.click()} className={"inputIcon"}>
                     <CameraIcon
@@ -108,13 +108,13 @@ function InputBox() {
                         hidden
                         type={"file"}
                         onChange={addImageToPost}/>
-                    <p className={"text-xs sm:text-sm xl:text-base"}>Photo/Video</p>
+                    <p className={"hidden md:flex text-xs sm:text-sm xl:text-base"}>Photo/Video</p>
                 </div>
                 <div className={"inputIcon"}>
                     <EmojiHappyIcon
                         className={"h-7 text-yellow-300"}
                     />
-                    <p className={"text-xs sm:text-sm xl:text-base"}>Feeling/Activity</p>
+                    <p className={"hidden md:flex text-xs sm:text-sm xl:text-base"}>Feeling/Activity</p>
                 </div>
             </div>
         </div>

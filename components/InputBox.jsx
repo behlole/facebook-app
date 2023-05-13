@@ -3,9 +3,9 @@ import Image from "next/image";
 import {EmojiHappyIcon} from "@heroicons/react/outline";
 import {CameraIcon, VideoCameraIcon} from "@heroicons/react/solid";
 import {useRef, useState} from "react";
-import firebase from "firebase/app";
-import {collection, addDoc, serverTimestamp} from "firebase/firestore";
-import {db} from "@/firebase";
+import {collection, addDoc, serverTimestamp, doc, updateDoc} from "firebase/firestore";
+import {db, storage} from "@/firebase";
+import {ref, uploadString, getDownloadURL} from 'firebase/storage';
 
 function InputBox() {
     const {data} = useSession();
@@ -16,15 +16,33 @@ function InputBox() {
     const sendPost = async (event) => {
         event.preventDefault();
         if (!inputRef.current.value) return;
-        addDoc(collection(db, 'posts'), {
-            message: inputRef.current.value,
-            name: data.user.name,
-            email: data.user.email,
-            image: data.user.image,
-            timestamp: serverTimestamp()
-        });
-        inputRef.current.value = ""
-    }
+
+        try {
+            const docRef = await addDoc(collection(db, 'posts'), {
+                message: inputRef.current.value,
+                name: data.user.name,
+                email: data.user.email,
+                image: data.user.image,
+                timestamp: serverTimestamp()
+            });
+
+            if (imageToPost) {
+                const storageRef = ref(storage, `posts/${docRef.id}`);
+                await uploadString(storageRef, imageToPost, 'data_url');
+                const imageURL = await getDownloadURL(storageRef);
+
+                const documentRef = doc(db, 'posts', docRef.id);
+                await updateDoc(documentRef, {postsImage: imageURL});
+            }
+
+            removeImage();
+            inputRef.current.value = '';
+        } catch (error) {
+            // Handle any errors that occurred
+            console.error(error);
+        }
+    };
+
 
     const addImageToPost = (e) => {
         const reader = new FileReader();

@@ -1,7 +1,8 @@
 import {DotsHorizontalIcon, VideoCameraIcon} from "@heroicons/react/solid";
 import {SearchIcon} from "@heroicons/react/outline";
+import {Contact} from "@/components/Contact";
 
-const stories = [{
+const contacts = [{
     name: "Elon Musk", src: "https://links.papareact.com/4zn",
 }, {
     name: "Jeff Bezos", src: "https://links.papareact.com/k2j",
@@ -22,5 +23,12 @@ export function Widgets() {
                     <DotsHorizontalIcon className={"h-6"}/>
                 </div>
             </div>
+            {contacts.map((contact, index) => (
+                <Contact
+                    key={index}
+                    name={contact.name}
+                    src={contact.src}
+                />
+            ))}
         </div>)
 }

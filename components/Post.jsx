@@ -21,9 +21,15 @@ export function Post({
                         <p className={"font-medium"}>
                             {name}
                         </p>
-                        <p className={"text-xs text-gray-400"}>
-                            {timestamp?.toDate().toLocaleString().toLocaleString()}
-                        </p>
+                        {timestamp ? (
+                            <p className={"text-xs text-gray-400"}>
+                                {timestamp.toDate().toLocaleString().toLocaleString()}
+                            </p>
+                        ) : (
+                            <p className={"text-xs"}>Loading</p>
+                        )
+                        }
+
                     </div>
                 </div>
                 <p className={"pt-4"}>

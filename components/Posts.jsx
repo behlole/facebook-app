@@ -3,40 +3,49 @@ import {collection, query, orderBy} from 'firebase/firestore';
 import {db} from '@/firebase';
 import {Post} from "@/components/Post";
 
-function Posts() {
+function Posts({posts}) {
+    /**
+     * Code to get posts using query
+     */
     const postsRef = collection(db, 'posts');
     const q = query(postsRef, orderBy('timestamp', 'desc'));
-    const [realtimePosts, loading, error] = useCollection(q);
-
-    if (loading) {
-        return <p>Loading...</p>;
+    const [realtimePostsSnapshot, loading, error] = useCollection(q);
+    let realtimePosts = null;
+    if (realtimePostsSnapshot) {
+        realtimePosts = realtimePostsSnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
     }
-
-    if (error) {
-        return <p>Error: {error.message}</p>;
-    }
-
-    if (!realtimePosts) {
-        return <p>No posts available</p>;
-    }
-
-    const posts = realtimePosts.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-    }));
     return (
-        <div>
-            {posts.map((post, index) => (
-                <Post
-                    key={index}
-                    name={post.name}
-                    message={post.message}
-                    email={post.email}
-                    timestamp={post.timestamp}
-                    image={post.image}
-                    postImage={post.postsImage}
-                />
-            ))}
+        <div>{
+            realtimePosts ?
+                realtimePosts.map((post, index) => (
+                    <Post
+                        key={index}
+                        name={post.name}
+                        message={post.message}
+                        email={post.email}
+                        timestamp={post.timestamp}
+                        image={post.image}
+                        postImage={post.postsImage}
+                    />
+                ))
+                :
+                (
+                    posts.map((post, index) => (
+                        <Post
+                            key={index}
+                            name={post.name}
+                            message={post.message}
+                            email={post.email}
+                            timestamp={post.timestamp}
+                            image={post.image}
+                            postImage={post.postsImage}
+                        />
+                    ))
+                )
+        }
         </div>
     );
 }
